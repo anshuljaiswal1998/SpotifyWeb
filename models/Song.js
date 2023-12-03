@@ -8,6 +8,15 @@ const SongSchema = new mongoose.Schema({
     track: {
         type: String,
         required: true
+    },
+    thumbnail: {
+        type: String,
+        required: true
+    },
+    artist: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 })
 

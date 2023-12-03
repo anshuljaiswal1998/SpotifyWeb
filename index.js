@@ -2,11 +2,14 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
 const loginRoute = require("./routes/LoginRoute");
+const songRoute = require("./routes/SongRoute.js");
 const { error } = require('console');
 require("dotenv").config();
 const JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require("./models/User.js")
+const passport = require('passport');
+app.use(passport.initialize());
 
 app.use(express.json())
 
@@ -19,18 +22,15 @@ mongoose.connect(
     });
 
 // Added Passport for Authentication using middleware    
-var opts = {}
+let opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET_KEY;
 passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findOne({ id: jwt_payload.sub }, function (err, user) {
-        if (err) {
-            return done(err, false);
-        }
+    User.findOne({ email: jwt_payload.user.email }).exec().then(function (user) {
         if (user) {
-            return done(null, user);
+            done(null, user);
         } else {
-            return done(null, false);
+            done(null, false);
             // or you could create a new account
         }
     });
@@ -38,5 +38,6 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 
 
 app.use('/auth', loginRoute)
+app.use('/song', songRoute)
 
 app.listen(8080, () => console.log("Server is running"))
