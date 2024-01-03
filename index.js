@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose');
 const loginRoute = require("./routes/LoginRoute");
 const songRoute = require("./routes/SongRoute.js");
+const playlistRoute = require("./routes/PlaylistRoute.js");
 const { error } = require('console');
 require("dotenv").config();
 const JwtStrategy = require('passport-jwt').Strategy,
@@ -39,5 +40,6 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 
 app.use('/auth', loginRoute)
 app.use('/song', songRoute)
+app.use('/playlist', playlistRoute)
 
 app.listen(8080, () => console.log("Server is running"))
