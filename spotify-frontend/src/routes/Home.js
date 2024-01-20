@@ -3,6 +3,31 @@ import mainLogo from '../assets/images/spotify-logo-white.png';
 import IconText from '../components/shared/IconText';
 import TextWithHover from '../components/shared/TextWithHover';
 
+const sampleCardData = [{
+    "title": "Peaceful Piano",
+    "description": "Relax and indulge with peaceful piano pieces",
+    "imageUrl": "https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg"
+},
+{
+    "title": "Relaxing Piano",
+    "description": "Relax and indulge with peaceful piano pieces",
+    "imageUrl": "https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg"
+},
+{
+    "title": "Peaceful Piano",
+    "description": "Relax and indulge with peaceful piano pieces",
+    "imageUrl": "https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg"
+},
+{
+    "title": "Peaceful Piano",
+    "description": "Relax and indulge with peaceful piano pieces",
+    "imageUrl": "https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg"
+},
+{
+    "title": "Peaceful Piano",
+    "description": "Relax and indulge with peaceful piano pieces",
+    "imageUrl": "https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg"
+}];
 
 const Home = () => {
     return (
@@ -35,7 +60,7 @@ const Home = () => {
             </div>
 
             {/* Nav Bar and Content */}
-            <div className='w-5/6 h-full bg-app-black '>
+            <div className='w-5/6 h-full bg-app-black overflow-auto'>
                 {/* Navbar */}
                 <div className='navbar flex w-full h-1/10 bg-black bg-opacity-20 text-white items-center  justify-end'>
                     <div className='w-1/2 flex h-full'>
@@ -57,7 +82,11 @@ const Home = () => {
 
                 {/* Content */}
                 <div className='content h-9/10 p-8'>
-                    <PlaylistView />
+                    <PlaylistView playlistTitle="Focus" cardsData={sampleCardData} />
+                    <PlaylistView playlistTitle="Spotify Playlist" cardsData={sampleCardData} />
+                    <PlaylistView playlistTitle="Sound of India" cardsData={sampleCardData} />
+                    {/* <PlaylistView playlistTitle="Spotify Playlist" />
+                    <PlaylistView playlistTitle="Sound of India" /> */}
                 </div>
 
             </div>
@@ -66,19 +95,22 @@ const Home = () => {
     )
 }
 
-const PlaylistView = () => {
+const PlaylistView = ({ playlistTitle, cardsData }) => {
     return (
         <div className='w-full text-white'>
-            <div className='title font-semibold text-xl mb-5'>
-                Focus
+            <div className='title font-semibold text-xl mb-5 '>
+                {playlistTitle}
             </div>
 
-            <div className='flex w-full justify-between space-x-3'>
-                <Cards title="Peaceful Piano" description="Relax and indulge with peaceful piano pieces" />
-                <Cards title="Peaceful Piano" description="Relax and indulge with peaceful piano pieces" />
-                <Cards title="Peaceful Piano" description="Relax and indulge with peaceful piano pieces" />
-                <Cards title="Peaceful Piano" description="Relax and indulge with peaceful piano pieces" />
-                <Cards title="Peaceful Piano" description="Relax and indulge with peaceful piano pieces" />
+            <div className='flex w-full justify-between mb-8 space-x-3'>
+                {cardsData.map((item) => {
+                    return (
+                        <Cards title={item.title}
+                            description={item.description}
+                            imageUrl={item.imageUrl} />
+                    );
+                })
+                }
             </div>
         </div>
     )
@@ -88,7 +120,7 @@ const Cards = (props) => {
     return (
         <div className='w-1/5 px-4 bg-black bg-opacity-30 rounded-lg'>
             <div className='p-4'>
-                <img src="https://www.kmmc.in/kmmc/uploads/2023/09/child-pianist-practicing-playing-close-up-chord-skill-generated-by-ai.jpg" alt="label" />
+                <img src={props.imageUrl} alt="label" />
             </div>
             <div className='py-2 font-semibold font-m'>
                 {props.title}
